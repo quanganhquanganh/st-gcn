@@ -70,6 +70,16 @@ class Graph():
             neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
             self.edge = self_link + neighbor_link
             self.center = 2
+        elif layout == 'halp_no_face':
+            self.num_node = 68
+            self_link = [(i, i) for i in range(self.num_node)]
+            neighbor_1base = [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16], 
+                    [20, 21], [22, 23], [24, 25], [26, 47], [27, 48], [28, 49], [29, 50], [30, 51], 
+                    [31, 52], [32, 53], [33, 54], [34, 55], [35, 56], [36, 57], [37, 58], [38, 59], 
+                    [39, 60], [40, 61], [41, 62], [42, 63], [43, 64], [44, 65], [45, 66], [46, 67]]
+            neighbor_link = [(i - 1, j - 1) for (i, j) in neighbor_1base]
+            self.edge = self_link + neighbor_link
+            self.center = 2
         # elif layout=='customer settings'
         #     pass
         else:
