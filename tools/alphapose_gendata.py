@@ -42,7 +42,7 @@ def gendata(
         data_path=data_path,
         label_path=label_path,
         num_person_out=num_person_out,
-        debug=True,
+        # debug=True,
         window_size=max_frame,
         sort_method=sort_method)
 
