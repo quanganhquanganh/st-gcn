@@ -34,7 +34,7 @@ def gendata(
         label_path,
         data_out_path,
         label_out_path,
-        sort_method='area_sum', 
+        sort_method='area_sum',
         num_person_out=1,  #then choose a person with the highest score 
         max_frame=300):
 
@@ -42,6 +42,7 @@ def gendata(
         data_path=data_path,
         label_path=label_path,
         num_person_out=num_person_out,
+        # debug=True,
         window_size=max_frame,
         sort_method=sort_method)
 
@@ -52,7 +53,7 @@ def gendata(
         data_out_path,
         dtype='float32',
         mode='w+',
-        shape=(len(sample_name), 3, max_frame, 18, num_person_out))
+        shape=(len(sample_name), 3, max_frame, 68, num_person_out))
 
     for i, s in enumerate(sample_name):
         data, label = feeder[i]
@@ -68,7 +69,7 @@ def gendata(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Kinetics-skeleton Data Converter.')
+        description='MUSIC Solo Data Converter.')
     parser.add_argument(
         '--data_path', default='data/MUSIC/music-solo-skeleton')
     parser.add_argument(
@@ -77,8 +78,8 @@ if __name__ == '__main__':
 
     part = ['train', 'val']
     for p in part:
-        data_path = '{}/kinetics_{}'.format(arg.data_path, p)
-        label_path = '{}/kinetics_{}_label.json'.format(arg.data_path, p)
+        data_path = '{}/music_solo_{}'.format(arg.data_path, p)
+        label_path = '{}/music_solo_{}_label.json'.format(arg.data_path, p)
         data_out_path = '{}/{}_data.npy'.format(arg.out_folder, p)
         label_out_path = '{}/{}_label.pkl'.format(arg.out_folder, p)
 

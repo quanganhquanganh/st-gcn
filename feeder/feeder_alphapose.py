@@ -56,7 +56,7 @@ class Feeder_alphapose(torch.utils.data.Dataset):
         self.sample_name = os.listdir(self.data_path)
 
         if self.debug:
-            self.sample_name = self.sample_name[:100]
+            self.sample_name = self.sample_name[:2]
 
         # load label Json file
         with open(self.label_path, 'r') as f:
@@ -96,7 +96,7 @@ class Feeder_alphapose(torch.utils.data.Dataset):
         with open(sample_path, 'r') as f:
             video_info = json.load(f)
         
-        data_numpy = np.zeroes((self.C, self.T, self.V, self.num_person_out))
+        data_numpy = np.zeros((self.C, self.T, self.V, self.M))
         
         # Get all values of the 'idx' key in the video_info
         idx_list = np.array([v['idx'] for v in video_info])
@@ -110,10 +110,12 @@ class Feeder_alphapose(torch.utils.data.Dataset):
         idx_list = np.unique(idx_list)
         
         if self.sort_method == 'area_sum':
+            # print(idx_list)
             idx_list = np.take(idx_list, np.argsort(
               [sum([(v['box'][2] * v['box'][3]) for v in idx_dict[idx]]) for idx in idx_list])[::-1])
             # Reduce the idx_list to the first num_person_out
-            idx_list = idx_list[:self.num_person_out]
+            idx_list = idx_list[:self.M]
+            # print(idx_list)
             # Add to the data_numpy
             for i, idx in enumerate(idx_list):
                 for pose_info in idx_dict[idx]:
@@ -126,7 +128,7 @@ class Feeder_alphapose(torch.utils.data.Dataset):
             idx_list = np.take(idx_list, np.argsort(
               [sum([sum(v['keypoints'][2::3]) for v in idx_dict[idx]]) for idx in idx_list])[::-1])
             # Reduce the idx_list to the first num_person_out
-            idx_list = idx_list[:self.num_person_out]
+            idx_list = idx_list[:self.M]
             # Add to the data_numpy
             for i, idx in enumerate(idx_list):
                 for pose_info in idx_dict[idx]:
